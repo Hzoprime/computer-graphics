@@ -5,7 +5,7 @@ void CSClipper::display()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_TRIANGLES);
 
-	glVertex2d(0, 0); 
+	glVertex2d(origin.x, origin.y); 
 	glVertex2d(10, 0); 
 	glVertex2d(5, 5*sqrt(3));
 
@@ -48,7 +48,7 @@ CSClipper* CSClipper::get_instance(int argc, char* argv[])
 
 CSClipper::~CSClipper()
 {
-	instances.erase[Lab3];
+	instances.erase(Lab3);
 }
 
 CSClipper::CSClipper(int argc, char* argv[]) : LabBase(argc, argv)

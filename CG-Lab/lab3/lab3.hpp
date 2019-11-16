@@ -1,6 +1,11 @@
 #pragma once
 #include"../ulti.hpp"
 
+
+
+
+
+
 class CSClipper : public LabBase
 {
 public:
@@ -12,3 +17,4 @@ public:
 protected:
 	CSClipper(int argc, char* argv[]);
 };
+

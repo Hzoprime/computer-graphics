@@ -1,21 +1,6 @@
 #pragma once
 #include"../ulti.hpp"
 
-class Point
-{
-public:
-	double x;
-	double y;
-	Point(double _x = 0, double _y = 0) :x(_x), y(_y) {}
-	friend ostream& operator<<(ostream& out, const Point& p)
-	{
-		return out << '(' << p.x << ", " << p.y << ')';
-	}
-	friend bool operator==(const Point& a, const Point& b)
-	{
-		return a.x == b.x && a.y == b.y;
-	}
-};
 
 class PolyLineApp : public LabBase
 {

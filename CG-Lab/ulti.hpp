@@ -10,6 +10,7 @@
 #include<deque>
 #include<queue>
 #include<stack>
+
 using std::cin;
 using std::cout;
 using std::endl;
@@ -50,3 +51,31 @@ enum Lab
 };
 
 
+class Point
+{
+public:
+	double x;
+	double y;
+	Point(double _x = 0, double _y = 0) :x(_x), y(_y) {}
+	friend ostream& operator<<(ostream& out, const Point& p)
+	{
+		return out << '(' << p.x << ", " << p.y << ')';
+	}
+	friend bool operator==(const Point& a, const Point& b)
+	{
+		return abs(a.x - b.x) < std::numeric_limits<double>::epsilon() && (a.y - b.y) < std::numeric_limits<double>::epsilon();
+	}
+};
+
+const Point origin;
+
+class Line
+{
+public:
+	Point start;
+	Point end;
+	Line(const Point& _start = origin, const Point& _end = origin):start(_start), end(_end)
+	{
+
+	}
+};
