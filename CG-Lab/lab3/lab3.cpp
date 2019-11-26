@@ -1,16 +1,18 @@
 #include"lab3.hpp"
 
+
+
+
+
 void CSClipper::display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glBegin(GL_TRIANGLES);
 
-	glVertex2d(origin.x, origin.y); 
-	glVertex2d(10, 0); 
-	glVertex2d(5, 5*sqrt(3));
+	auto instance = get_instance(0, 0);
+	instance->rect.draw_in_gl();
+	
 
 
-	glEnd();
 	glFlush();
 }
 
@@ -22,7 +24,7 @@ void CSClipper::init()
 	//glut窗体创建
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("DrawSinOverX");
+	glutCreateWindow("CSClipper");
 	// 设置绘制函数
 	glutDisplayFunc(display);
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
@@ -46,12 +48,25 @@ CSClipper* CSClipper::get_instance(int argc, char* argv[])
 	return instance;
 }
 
+void CSClipper::clip()
+{
+	double boandary[4];
+	int code[4];
+	for (auto& line : raw_lines)
+	{
+
+	}
+}
+
 CSClipper::~CSClipper()
 {
 	instances.erase(Lab3);
 }
 
-CSClipper::CSClipper(int argc, char* argv[]) : LabBase(argc, argv)
+CSClipper::CSClipper(int argc, char* argv[]) : LabBase(argc, argv), rect(Point(0, 0), Point(6, 6))
 {
-
+	raw_lines.push_back(Line(Point(rand() % 10, rand() % 10), Point(rand() % 10, rand() % 10)));
+	raw_lines.push_back(Line(Point(rand() % 10, rand() % 10), Point(rand() % 10, rand() % 10)));
+	raw_lines.push_back(Line(Point(rand() % 10, rand() % 10), Point(rand() % 10, rand() % 10)));
+	raw_lines.push_back(Line(Point(rand() % 10, rand() % 10), Point(rand() % 10, rand() % 10)));
 }

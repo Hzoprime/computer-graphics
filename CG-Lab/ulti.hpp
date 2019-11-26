@@ -78,4 +78,39 @@ public:
 	{
 
 	}
+	void draw_in_gl()
+	{
+		glBegin(GL_LINE);
+		glVertex2d(start.x, start.y);
+		glVertex2d(end.x, end.y);
+		glEnd();
+	}
+};
+
+class Rect
+{
+	Point points[4];
+public:
+	Rect(const Point& p1, const Point& p2)
+	{
+		set_diagonal_point(p1, p2);
+	}
+	void draw_in_gl()
+	{
+		glBegin(GL_LINE_LOOP);
+
+		for (auto& point : points)
+		{
+			glVertex2d(point.x, point.y);
+			cout << point << endl;
+		}
+		glEnd();
+	}
+	void set_diagonal_point(const Point& p1, const Point& p2)
+	{
+		points[0] = p1;
+		points[2] = p2;
+		points[1] = Point(p1.x, p2.y);
+		points[3] = Point(p2.x, p1.y);
+	}
 };
