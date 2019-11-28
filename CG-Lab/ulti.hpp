@@ -74,23 +74,27 @@ class Line
 public:
 	Point start;
 	Point end;
-	Line(const Point& _start = origin, const Point& _end = origin):start(_start), end(_end)
+	Line(const Point& _start = origin, const Point& _end = origin) :start(_start), end(_end)
 	{
 
 	}
-	void draw_in_gl()
+	void draw_in_gl()const
 	{
-		glBegin(GL_LINE);
+		glBegin(GL_LINES);
 		glVertex2d(start.x, start.y);
 		glVertex2d(end.x, end.y);
 		glEnd();
+	}
+	friend ostream& operator<<(ostream& out, const Line& line)
+	{
+		return out << "start: " << line.start << "\tend: " << line.end;
 	}
 };
 
 class Rect
 {
-	Point points[4];
 public:
+	Point points[4];
 	Rect(const Point& p1, const Point& p2)
 	{
 		set_diagonal_point(p1, p2);
@@ -102,7 +106,6 @@ public:
 		for (auto& point : points)
 		{
 			glVertex2d(point.x, point.y);
-			cout << point << endl;
 		}
 		glEnd();
 	}
