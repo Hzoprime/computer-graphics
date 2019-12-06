@@ -30,6 +30,9 @@
     <ClInclude Include="lab3\lab3.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="lab4\lab4.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,6 +48,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="lab3\lab3.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lab4\lab4.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
