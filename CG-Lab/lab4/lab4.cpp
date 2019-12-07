@@ -1,31 +1,52 @@
-#include"lab1.hpp"
+#include"lab4.hpp"
 
-double DrawSinOverX::a = 1;
-double DrawSinOverX::b = 2;
-double DrawSinOverX::c = 40;
-double DrawSinOverX::d = 20;
 
-DrawSinOverX::DrawSinOverX(int _argc, char* _argv[]) :LabBase(_argc, _argv)
+Animation::Animation(int _argc, char* _argv[]) :LabBase(_argc, _argv)
 {
 
+	poly1.push_back(Point(0.5, 0));
+	poly1.push_back(Point(0.5, 1));
+	poly1.push_back(Point(1.4, 1));
+
+	poly1.push_back(Point(0.3, 3));
+	poly1.push_back(Point(1, 3));
+	poly1.push_back(Point(0, 5));
+
+	poly1.push_back(Point(-1, 3));
+	poly1.push_back(Point(-0.3, 3));
+	poly1.push_back(Point(-1.4, 1));
+
+	poly1.push_back(Point(-0.5, 1));
+	poly1.push_back(Point(-0.5, 0));
+
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	poly2.push_back(Point(rand() % 5, rand() % 5));
+	//}
 }
 
-void DrawSinOverX::display()
+void Animation::display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glBegin(GL_LINE_STRIP);
-	double sin_x_start = -20;
-	double sin_x_end = 20;
-	double step = 0.01;
-	for (double x = sin_x_start; x < sin_x_end; x += step)
+	auto instance = get_instance(0, 0);
+	glBegin(GL_LINE_LOOP);
+	for (auto& p : instance->poly1)
 	{
-		glVertex2d(a * x + b, c * sin(x) / x + d);
+		cout << p << endl;
+		glVertex2d(p.x, p.y);
 	}
+
 	glEnd();
+	//glBegin(GL_LINE_LOOP);
+	//for (auto& p : instance->poly2)
+	//{
+	//	glVertex2d(p.x, p.y);
+	//}
+	//glEnd();
 	glFlush();
 }
 
-void DrawSinOverX::on_keyboard(unsigned char key, int x, int y)
+void Animation::on_keyboard(unsigned char key, int x, int y)
 {
 	if (key == 27/*ESC*/ || key == 'q')
 	{
@@ -33,29 +54,28 @@ void DrawSinOverX::on_keyboard(unsigned char key, int x, int y)
 	}
 	else
 	{
-		b++;
 		display();
 	}
 }
 
-void DrawSinOverX::init()
+void Animation::init()
 {
 	glutInit(&argc, argv);
 	//glut 初始化 为 rgb颜色模式,单缓冲
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
 	//glut窗体创建
-	glutInitWindowSize(1200, 400);
+	glutInitWindowSize(400, 400);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("DrawSinOverX");
+	glutCreateWindow("Animation");
 	// 设置绘制函数
 	glutDisplayFunc(display);
 	// 设置键盘操作
 	glutKeyboardFunc(on_keyboard);
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
-	gluOrtho2D(-300.0, 300.0, -100.0, 100.0);
+	gluOrtho2D(-5.0, 5.0, -5.0, 5.0);
 }
 
-void DrawSinOverX::run()
+void Animation::run()
 {
 	// 初始化参数
 	init();
@@ -63,18 +83,18 @@ void DrawSinOverX::run()
 	glutMainLoop();
 }
 
-DrawSinOverX* DrawSinOverX::get_instance(int argc, char* argv[])
+Animation* Animation::get_instance(int argc, char* argv[])
 {
-	if (instances.count(Lab1))
+	if (instances.count(Lab4))
 	{
-		return dynamic_cast<DrawSinOverX*>(instances[Lab1]);
+		return dynamic_cast<Animation*>(instances[Lab4]);
 	}
-	auto instance = new DrawSinOverX(argc, argv);
-	instances[Lab1] = instance;
+	auto instance = new Animation(argc, argv);
+	instances[Lab4] = instance;
 	return instance;
 }
 
-DrawSinOverX::~DrawSinOverX()
+Animation::~Animation()
 {
-	instances.erase(Lab1);
+	instances.erase(Lab4);
 }

@@ -1,11 +1,6 @@
 #pragma once
 #include"../ulti.hpp"
 
-
-
-
-
-
 class CSClipper : public LabBase
 {
 public:
