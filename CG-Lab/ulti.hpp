@@ -65,6 +65,14 @@ public:
 	{
 		return abs(a.x - b.x) < std::numeric_limits<double>::epsilon() && (a.y - b.y) < std::numeric_limits<double>::epsilon();
 	}
+	friend Point operator+(const Point & a, const Point & b)
+	{
+		return Point(a.x + b.x, a.y + b.y);
+	}
+	friend Point operator*(const double& m, const Point & a)
+	{
+		return Point(m * a.x, m * a.y);
+	}
 };
 
 const Point origin;
