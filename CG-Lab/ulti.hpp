@@ -21,6 +21,8 @@ using std::min;
 using std::vector;
 using std::map;
 using std::unordered_map;
+using std::pair;
+using std::make_pair;
 using std::unordered_set;
 using std::set;
 using std::deque;
@@ -47,8 +49,9 @@ private:
 };
 enum Lab
 {
-	Lab1, Lab2, Lab3, Lab4
+	Lab1, Lab2, Lab3, Lab4, Lab5
 };
+
 
 
 class Point
@@ -56,7 +59,8 @@ class Point
 public:
 	double x;
 	double y;
-	Point(double _x = 0, double _y = 0) :x(_x), y(_y) {}
+	double z;
+	Point(double _x = 0, double _y = 0, double _z = 0) :x(_x), y(_y), z(_z) {}
 	friend ostream& operator<<(ostream& out, const Point& p)
 	{
 		return out << '(' << p.x << ", " << p.y << ')';
@@ -67,15 +71,51 @@ public:
 	}
 	friend Point operator+(const Point & a, const Point & b)
 	{
-		return Point(a.x + b.x, a.y + b.y);
+		return Point(a.x + b.x, a.y + b.y, a.z + b.z);
 	}
 	friend Point operator*(const double& m, const Point & a)
 	{
-		return Point(m * a.x, m * a.y);
+		return Point(m * a.x, m * a.y, m * a.z);
 	}
 };
 
 const Point origin;
+
+class Vector
+{
+public:
+	double x;
+	double y;
+	double z;
+	Vector(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z)
+	{
+
+	}
+	friend Vector operator+(const Vector& a, const Vector& b)
+	{
+		return Vector(a.x + b.x, a.y + b.y, a.z + b.z);
+	}
+	friend Vector operator-(const Vector & a, const Vector & b)
+	{
+		return Vector(a.x - b.x, a.y - b.y, a.z - b.z);
+	}
+	friend Vector operator*(const double& a, const Vector & b)
+	{
+		return Vector(a * b.x, a * b.y, a * b.z);
+	}
+	friend Vector cross_product(const Vector & a, const Vector & b)
+	{
+		return Vector(
+			a.y * b.z - a.z * b.y,
+			a.z * b.x - a.x * b.z,
+			a.x * b.y - a.y * b.x
+		);
+	}
+	friend double dot_product(const Vector & a, const Vector & b)
+	{
+		return a.x* b.x + a.y * b.y + a.z * b.z;
+	}
+};
 
 class Line
 {
