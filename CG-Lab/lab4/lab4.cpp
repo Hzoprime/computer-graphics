@@ -3,7 +3,8 @@
 
 Animation::Animation(int _argc, char* _argv[]) :LabBase(_argc, _argv)
 {
-
+	direction = 1;
+	is_pause = 0;
 	poly1.push_back(Point(0.5, 0));
 	poly1.push_back(Point(0.5, 1));
 	poly1.push_back(Point(1.4, 1));
@@ -65,9 +66,14 @@ void Animation::on_keyboard(unsigned char key, int x, int y)
 	{
 		glutLeaveMainLoop();
 	}
+	else if (key == 'p' || key == 'P')
+	{
+		cout << "hlh" << endl;
+		get_instance(0, 0)->is_pause = 1;
+	}
 	else
 	{
-		display();
+		get_instance(0, 0)->is_pause = 0;
 	}
 }
 
@@ -118,15 +124,30 @@ void Animation::run()
 //		}
 //	}
 //}
+
 void Animation::animation(int value)
 {
 	int times = 1000;
 	auto instance = get_instance(0, 0);
-	if (value > times)
-		return;
+	if ((value >= times && instance->direction) || (value <= 0 && !(instance->direction)))
+	{
+		instance->direction = !(instance->direction);
+	}
 	instance->interpolate(times, value);
-	glutTimerFunc(10, animation, value + 1);
+	if (instance->is_pause)
+	{
+		glutTimerFunc(10, animation, value);
+	}
+	else if (instance->direction)
+	{
+		glutTimerFunc(10, animation, value + 1);
+	}
+	else
+	{
+		glutTimerFunc(10, animation, value - 1);
+	}
 }
+
 void Animation::interpolate(const int& n, const int& t)
 {
 	for (int i = 0; i < poly1.size(); i++)

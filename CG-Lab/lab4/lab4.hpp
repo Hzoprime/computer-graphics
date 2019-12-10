@@ -8,6 +8,8 @@ class Animation : public LabBase
 protected:
 	Animation(int argc, char* argv[]);
 	vector<Point> poly1, poly2, poly3;
+	int direction;
+	int is_pause;
 public:
 	static void display();
 	static void on_keyboard(unsigned char key, int x, int y);
