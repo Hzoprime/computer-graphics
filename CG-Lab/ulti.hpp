@@ -10,7 +10,7 @@
 #include<deque>
 #include<queue>
 #include<stack>
-
+#include<fstream>
 using std::cin;
 using std::cout;
 using std::endl;
@@ -29,6 +29,9 @@ using std::deque;
 using std::queue;
 using std::stack;
 using std::ostream;
+using std::ifstream;
+using std::ofstream;
+using std::cerr;
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h>
 //#define _USE_MATH_DEFINES
@@ -63,7 +66,7 @@ public:
 	Point(double _x = 0, double _y = 0, double _z = 0) :x(_x), y(_y), z(_z) {}
 	friend ostream& operator<<(ostream& out, const Point& p)
 	{
-		return out << '(' << p.x << ", " << p.y << ')';
+		return out << p.x << " " << p.y << " " << p.z;
 	}
 	friend bool operator==(const Point& a, const Point& b)
 	{
@@ -90,6 +93,10 @@ public:
 	Vector(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z)
 	{
 
+	}
+	friend ostream& operator<<(ostream& out, const Vector& v)
+	{
+		return out << v.x << " " << v.y << " " << v.z;
 	}
 	friend Vector operator+(const Vector& a, const Vector& b)
 	{
@@ -165,5 +172,6 @@ public:
 		points[3] = Point(p2.x, p1.y);
 	}
 };
+
 
 
