@@ -6,3 +6,4 @@
 #include"lab5/lab5.hpp"
 #include"lab9/lab9.hpp"
 #include"lab10/lab10.hpp"
+#include"lab11/lab11.hpp"

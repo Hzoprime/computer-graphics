@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClInclude Include="header.hpp" />
     <ClInclude Include="lab10\lab10.hpp" />
+    <ClInclude Include="lab11\lab11.hpp" />
     <ClInclude Include="lab3\lab3.hpp" />
     <ClInclude Include="lab4\lab4.hpp" />
     <ClInclude Include="lab5\lab5.hpp" />
@@ -135,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lab10\lab10.cpp" />
+    <ClCompile Include="lab11\lab11.cpp" />
     <ClCompile Include="lab1\lab1.cpp" />
     <ClCompile Include="lab2\lab2.cpp" />
     <ClCompile Include="lab3\lab3.cpp" />
