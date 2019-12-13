@@ -52,37 +52,9 @@ private:
 };
 enum Lab
 {
-	Lab1, Lab2, Lab3, Lab4, Lab5, Lab9
+	Lab1, Lab2, Lab3, Lab4, Lab5, Lab9, Lab10
 };
 
-
-
-class Point
-{
-public:
-	double x;
-	double y;
-	double z;
-	Point(double _x = 0, double _y = 0, double _z = 0) :x(_x), y(_y), z(_z) {}
-	friend ostream& operator<<(ostream& out, const Point& p)
-	{
-		return out << p.x << " " << p.y << " " << p.z;
-	}
-	friend bool operator==(const Point& a, const Point& b)
-	{
-		return abs(a.x - b.x) < std::numeric_limits<double>::epsilon() && (a.y - b.y) < std::numeric_limits<double>::epsilon();
-	}
-	friend Point operator+(const Point & a, const Point & b)
-	{
-		return Point(a.x + b.x, a.y + b.y, a.z + b.z);
-	}
-	friend Point operator*(const double& m, const Point & a)
-	{
-		return Point(m * a.x, m * a.y, m * a.z);
-	}
-};
-
-const Point origin;
 
 class Vector
 {
@@ -90,26 +62,13 @@ public:
 	double x;
 	double y;
 	double z;
-	Vector(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z)
-	{
-
-	}
-	friend ostream& operator<<(ostream& out, const Vector& v)
-	{
-		return out << v.x << " " << v.y << " " << v.z;
-	}
-	friend Vector operator+(const Vector& a, const Vector& b)
-	{
-		return Vector(a.x + b.x, a.y + b.y, a.z + b.z);
-	}
-	friend Vector operator-(const Vector & a, const Vector & b)
-	{
-		return Vector(a.x - b.x, a.y - b.y, a.z - b.z);
-	}
-	friend Vector operator*(const double& a, const Vector & b)
-	{
-		return Vector(a * b.x, a * b.y, a * b.z);
-	}
+	Vector(double _x = 0, double _y = 0, double _z = 0) : x(_x), y(_y), z(_z) {	}
+	void set(const double& _x, const double& _y, const double& _z) { x = _x; y = _y; z = _z; }
+	void set(const Vector& v) { x = v.x; y = v.y; z = v.z; }
+	friend ostream& operator<<(ostream& out, const Vector& v) { return out << v.x << " " << v.y << " " << v.z; }
+	friend Vector operator+(const Vector& a, const Vector& b) { return Vector(a.x + b.x, a.y + b.y, a.z + b.z); }
+	friend Vector operator-(const Vector & a, const Vector & b) { return Vector(a.x - b.x, a.y - b.y, a.z - b.z); }
+	friend Vector operator*(const double& a, const Vector & b) { return Vector(a * b.x, a * b.y, a * b.z); }
 	friend Vector cross_product(const Vector & a, const Vector & b)
 	{
 		return Vector(
@@ -118,11 +77,48 @@ public:
 			a.x * b.y - a.y * b.x
 		);
 	}
-	friend double dot_product(const Vector & a, const Vector & b)
+	friend double dot_product(const Vector & a, const Vector & b) { return a.x* b.x + a.y * b.y + a.z * b.z; }
+	void normalize()
 	{
-		return a.x* b.x + a.y * b.y + a.z * b.z;
+		double norm = dot_product(*this, *this);
+		if (norm <= std::numeric_limits<double>::epsilon())
+		{
+			cerr << "this vector might be (0, 0, 0)" << endl;
+			return;
+		}
+		double factor = 1.0 / sqrt(norm);
+		x *= factor;
+		y *= factor;
+		z *= factor;
 	}
 };
+
+class Point
+{
+public:
+	double x;
+	double y;
+	double z;
+	Point(double _x = 0, double _y = 0, double _z = 0) :x(_x), y(_y), z(_z) {}
+	void set(const double& _x, const double& _y, const double& _z) { x = _x; y = _y; z = _z; }
+	void set(const Point& p) { x = p.x; y = p.y; z = p.z; }
+	friend ostream& operator<<(ostream& out, const Point& p) { return out << p.x << " " << p.y << " " << p.z; }
+	friend bool operator==(const Point& a, const Point& b)
+	{
+		return abs(a.x - b.x) < std::numeric_limits<double>::epsilon() && (a.y - b.y) < std::numeric_limits<double>::epsilon();
+	}
+	// two  function below are used linear interpolation
+	friend Point operator+(const Point & a, const Point & b) { return Point(a.x + b.x, a.y + b.y, a.z + b.z); }
+	friend Point operator*(const double& m, const Point & a) { return Point(m * a.x, m * a.y, m * a.z); }
+	friend Vector get_diff(const Point& a, const Point& b)
+	{
+		return (Vector(a.x - b.x, a.y - b.y, a.z - b.z));
+	}
+};
+
+const Point origin;
+
+
 
 class Line
 {
@@ -172,6 +168,5 @@ public:
 		points[3] = Point(p2.x, p1.y);
 	}
 };
-
 
 

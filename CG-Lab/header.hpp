@@ -5,3 +5,4 @@
 #include"lab4/lab4.hpp"
 #include"lab5/lab5.hpp"
 #include"lab9/lab9.hpp"
+#include"lab10/lab10.hpp"
