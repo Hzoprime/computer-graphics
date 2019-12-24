@@ -19,7 +19,7 @@ void MeshLab::display()
 	auto instance = get_instance(0, 0);
 	auto mesh = instance->mesh;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glColor3d(1, 0, 0);
+	glColor3d(1, 1, 1);
 
 	for (auto& face : mesh->face_list)
 	{
@@ -58,7 +58,7 @@ void MeshLab::init()
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluLookAt(3, 4, 4, 0.0, 0, 1, 0.0, 0, 1);
+	gluLookAt(3, 4, 4, 0.0, 0, 1, 0, 0, 1);
 
 
 
@@ -80,6 +80,10 @@ void MeshLab::on_keyboard(unsigned char key, int x, int y)
 	if (key == 'q' || key == 'Q' || key == 27)
 	{
 		glutLeaveMainLoop();
+	}
+	else if(key == 's'|| key == 'S')
+	{
+		get_instance(0, 0)->mesh->save_mesh("on_keyboard.txt");
 	}
 }
 
@@ -147,6 +151,7 @@ int Mesh::read_mesh(string filename)
 int Mesh::save_mesh(string filename)
 {
 	ofstream file(filename);
+	file << setiosflags(ios::fixed) << setprecision(10);
 	if (!file.is_open() || file.eof())
 	{
 		cerr << "can not open this file." << endl;
@@ -156,8 +161,6 @@ int Mesh::save_mesh(string filename)
 		<< normal_list.size() << ' '
 		<< face_list.size()
 		<< endl;
-
-
 
 	for (auto& point : vertex_list)
 	{
@@ -182,17 +185,12 @@ void Mesh::draw_in(MeshLab * mesh_lab)
 	mesh_lab->set_mesh(this);
 }
 
-Mesh get_sphere(const double& r)
+Mesh get_sphere(const double& r, const int& phi_step, const int& theta_step)
 {
 	Mesh mesh;
 
-	int phi_step = 10;
-
 	double phi = 0;
 	double delta_phi = pi / phi_step;
-
-	int theta_step = 40;
-
 
 	double theta = 0;
 	double delta_theta = 2 * pi / theta_step;

@@ -9,7 +9,14 @@ CameraLab2::CameraLab2(int argv, char* arg[]) :LabBase(argv, arg), mode(0)
 void CameraLab2::transform_matrix(const int& id, unsigned char key)
 {
 	glPushMatrix();
-	glLoadMatrixd(v[id]);
+	if (id >= v.size())
+	{
+		glLoadMatrixd(v.back());
+	}
+	else
+	{
+		glLoadMatrixd(v[id]);
+	}
 	switch (key)
 	{
 	case 'a': glTranslated(-0.1, 0, 0); break;

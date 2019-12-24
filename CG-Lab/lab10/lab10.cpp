@@ -31,8 +31,6 @@ void CameraLab::display()
 
 void CameraLab::on_keyboard(unsigned char key, int x, int y)
 {
-	cout << key << endl;
-	cout << (int)key << endl;
 	auto& camera = get_instance(0, 0)->camera;
 	switch (key) {
 	case 'd': camera.slide(0.2, 0, 0); break;
@@ -47,7 +45,7 @@ void CameraLab::on_keyboard(unsigned char key, int x, int y)
 	case ']': camera.yaw(1); break;
 	case 'q': camera.roll(1); break;
 	case 'e': camera.roll(-1); break;
-	case 27: exit(0);
+	case 27: glutLeaveMainLoop(); break;
 	}
 	glutPostRedisplay();
 }

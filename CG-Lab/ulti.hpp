@@ -12,6 +12,10 @@
 #include<stack>
 #include<fstream>
 #include<sstream>
+#include<iomanip>
+using std::ios;
+using std::setprecision;
+using std::setiosflags;
 using std::stringstream;
 using std::getline;
 using std::cin;

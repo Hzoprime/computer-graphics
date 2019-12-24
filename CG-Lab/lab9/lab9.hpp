@@ -36,9 +36,9 @@ public:
 			{
 				out << ' ' << vertex_id;
 			}
-			for (auto& normal_id : f.normal_id_list)
+			for (int i = 0; i < f.vertex_id_list.size(); i++)
 			{
-				out << ' ' << normal_id;
+				out << ' ' << f.normal_id_list[0];
 			}
 			return out;
 		}
@@ -54,4 +54,4 @@ public:
 };
 
 
-Mesh get_sphere(const double& semidiameter);
+Mesh get_sphere(const double& semidiameter, const int& phi_step, const int& theta_step);

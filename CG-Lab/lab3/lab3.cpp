@@ -10,6 +10,12 @@ void CSClipper::display()
 	instance->rect.draw_in_gl();
 
 	cout << instance->clipped_lines.size() << endl;
+	glColor3d(1, 0, 0);
+	for (const auto& line : instance->raw_lines)
+	{
+		line.draw_in_gl();
+	}
+	glColor3d(1, 1, 1);
 
 	for (const auto& line : instance->clipped_lines)
 	{
@@ -29,6 +35,7 @@ void CSClipper::init()
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("CSClipper");
+	glutKeyboardFunc(on_keyboard);
 	// 设置绘制函数
 	glutDisplayFunc(display);
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
@@ -54,6 +61,8 @@ CSClipper* CSClipper::get_instance(int argc, char* argv[])
 
 void CSClipper::on_keyboard(unsigned char key, int x, int y)
 {
+	auto instance = get_instance(0, 0);
+	cout << key << endl;
 	switch (key)
 	{
 	default:
@@ -62,6 +71,11 @@ void CSClipper::on_keyboard(unsigned char key, int x, int y)
 	case 'Q':
 	case 27:
 		glutLeaveMainLoop();
+		break;
+	case 'c':
+	case 'C':
+		instance->clip();
+		display();
 	}
 }
 

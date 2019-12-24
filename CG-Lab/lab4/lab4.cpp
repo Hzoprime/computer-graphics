@@ -68,7 +68,6 @@ void Animation::on_keyboard(unsigned char key, int x, int y)
 	}
 	else if (key == 'p' || key == 'P')
 	{
-		cout << "hlh" << endl;
 		get_instance(0, 0)->is_pause = 1;
 	}
 	else
