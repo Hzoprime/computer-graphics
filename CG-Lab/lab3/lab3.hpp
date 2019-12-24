@@ -8,6 +8,7 @@ public:
 	void init();
 	void run();
 	static CSClipper* get_instance(int argc, char* argv[]);
+	static void on_keyboard(unsigned char key, int x, int y);
 	void clip();
 	~CSClipper();
 	const int codes[4] = { 8, 4, 2, 1 };

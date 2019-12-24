@@ -52,6 +52,19 @@ CSClipper* CSClipper::get_instance(int argc, char* argv[])
 	return instance;
 }
 
+void CSClipper::on_keyboard(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+	default:
+		break;
+	case 'q':
+	case 'Q':
+	case 27:
+		glutLeaveMainLoop();
+	}
+}
+
 void CSClipper::clip()
 {
 	const Point& rect_point_1 = this->rect.points[0];

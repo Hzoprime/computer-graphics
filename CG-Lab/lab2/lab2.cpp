@@ -46,7 +46,7 @@ void PolyLineApp::on_keyboard(unsigned char key, int x, int y)
 	{
 		return;
 	}
-	if (key == 'q' || key == 'Q')
+	if (key == 'q' || key == 'Q' || key == 27)
 	{
 		glutLeaveMainLoop();
 	}
@@ -266,6 +266,7 @@ PolyLineApp* PolyLineApp::get_instance(int argc, char* argv[])
 
 PolyLineApp::~PolyLineApp()
 {
+	cout << "lab2 ~ " << endl;
 	instances.erase(Lab2);
 }
 

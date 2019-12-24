@@ -3,7 +3,7 @@
 #include<string>	
 #include<algorithm>
 #include<vector>
-#include<map>	
+#include<map>
 #include<unordered_map>
 #include<set>
 #include<unordered_set>
@@ -11,6 +11,9 @@
 #include<queue>
 #include<stack>
 #include<fstream>
+#include<sstream>
+using std::stringstream;
+using std::getline;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -46,7 +49,7 @@ protected:
 	static unordered_map<int, LabBase*> instances;
 public:
 	virtual void run() = 0;
-	~LabBase();
+	virtual ~LabBase();
 private:
 
 };
@@ -111,10 +114,10 @@ public:
 	{
 		return abs(a.x - b.x) < std::numeric_limits<double>::epsilon() && (a.y - b.y) < std::numeric_limits<double>::epsilon();
 	}
-	// two  function below are used linear interpolation
+	// two function below are used linear interpolation
 	friend Point operator+(const Point & a, const Point & b) { return Point(a.x + b.x, a.y + b.y, a.z + b.z); }
 	friend Point operator*(const double& m, const Point & a) { return Point(m * a.x, m * a.y, m * a.z); }
-	friend Vector get_diff(const Point& a, const Point& b)
+	friend Vector get_diff(const Point & a, const Point & b)
 	{
 		return (Vector(a.x - b.x, a.y - b.y, a.z - b.z));
 	}

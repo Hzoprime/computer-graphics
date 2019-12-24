@@ -141,5 +141,5 @@ CameraLab2* CameraLab2::get_instance(int argc, char* argv[])
 
 CameraLab2::~CameraLab2()
 {
-	instances.erase(Lab10);
+	instances.erase(Lab11);
 }

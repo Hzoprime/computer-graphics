@@ -22,9 +22,10 @@ public:
 
 class Mesh
 {
+protected:
+public:
 	class Face
 	{
-
 	public:
 		vector<int> vertex_id_list;
 		vector<int> normal_id_list;
@@ -39,12 +40,10 @@ class Mesh
 			{
 				out << ' ' << normal_id;
 			}
-			return out; 
+			return out;
 		}
 	};
 
-protected:
-public:
 	vector<Point> vertex_list;
 	vector<Vector> normal_list;
 	vector<Face> face_list;
@@ -55,3 +54,4 @@ public:
 };
 
 
+Mesh get_sphere(const double& semidiameter);

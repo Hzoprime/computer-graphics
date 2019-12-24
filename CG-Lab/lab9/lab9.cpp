@@ -181,3 +181,145 @@ void Mesh::draw_in(MeshLab * mesh_lab)
 {
 	mesh_lab->set_mesh(this);
 }
+
+Mesh get_sphere(const double& r)
+{
+	Mesh mesh;
+
+	int phi_step = 10;
+
+	double phi = 0;
+	double delta_phi = pi / phi_step;
+
+	int theta_step = 40;
+
+
+	double theta = 0;
+	double delta_theta = 2 * pi / theta_step;
+
+	vector<Point> upper, lower;
+	vector<int> upper_id, lower_id;
+
+	int vertex_count = 0;
+
+	// north pole
+	const auto north_pole = Point(0, 0, r);
+	mesh.vertex_list.push_back(north_pole);
+	vertex_count++;
+
+	// south pole
+	const auto south_pole = Point(0, 0, -r);
+	mesh.vertex_list.push_back(south_pole);
+	vertex_count++;
+	
+	cout << "begin for north pole" << endl;
+
+	// those face contain north pole
+	for (int j = 0; j < theta_step; j++)
+	{
+		double sin_phi = sin(phi);
+		upper.push_back(Point(r * sin_phi * cos(theta), r * sin_phi * sin(theta), r * cos(phi)));
+		upper_id.push_back(vertex_count++);
+		theta += delta_theta;
+	}
+
+	mesh.vertex_list.insert(mesh.vertex_list.end(), upper.begin(), upper.end());
+
+	for (int k = 0; k < upper.size(); k++)
+	{
+		Mesh::Face face;
+
+		face.vertex_id_list.push_back(0);
+		face.vertex_id_list.push_back(upper_id[k]);
+		face.vertex_id_list.push_back(upper_id[(k + 1) % upper.size()]);
+
+		Point b = upper[(k + 1) % upper.size()];
+		Point c = upper[k];
+
+		auto n = cross_product(get_diff(c, north_pole), get_diff(b, north_pole));
+
+		face.normal_id_list.push_back(mesh.normal_list.size());
+		mesh.normal_list.push_back(n);
+
+		mesh.face_list.push_back(face);
+	}
+
+	phi += delta_phi;
+	cout << "after all about north pole" << endl;
+	// those face contain neither pole
+	for (int i = 1; i < phi_step - 1; i++)
+	{
+		lower.clear();
+		lower_id.clear();
+		theta = 0;
+		for (int j = 0; j < theta_step; j++)
+		{
+			double sin_phi = sin(phi);
+			lower.push_back(Point(r * sin_phi * cos(theta), r * sin_phi * sin(theta), r * cos(phi)));
+			lower_id.push_back(vertex_count++);
+			theta += delta_theta;
+		}
+
+
+		mesh.vertex_list.insert(mesh.vertex_list.end(), lower.begin(), lower.end());
+
+		for (int k = 0; k < lower.size(); k++)
+		{
+			Mesh::Face face;
+
+			face.vertex_id_list.push_back(upper_id[k]);
+			face.vertex_id_list.push_back(upper_id[(k + 1) % lower.size()]);
+			face.vertex_id_list.push_back(lower_id[k]);
+			face.vertex_id_list.push_back(lower_id[(k + 1) % lower.size()]);
+
+			Point a = upper[k];
+			Point b = upper[(k + 1) % lower.size()];
+			Point c = lower[k];
+
+			auto n = cross_product(get_diff(c, a), get_diff(b, a));
+
+			face.normal_id_list.push_back(mesh.normal_list.size());
+			mesh.normal_list.push_back(n);
+
+			mesh.face_list.push_back(face);
+		}
+
+		upper = lower;
+		upper_id = lower_id;
+		phi += delta_phi;
+	}
+
+	cout << "before south pole" << endl;
+	// those face contain south pole
+	theta = 0;
+	for (int j = 0; j < theta_step; j++)
+	{
+		double sin_phi = sin(phi);
+		lower.push_back(Point(r * sin_phi * cos(theta), r * sin_phi * sin(theta), r * cos(phi)));
+		lower_id.push_back(vertex_count++);
+		theta += delta_theta;
+	}
+
+	mesh.vertex_list.insert(mesh.vertex_list.end(), lower.begin(), lower.end());
+
+	for (int k = 0; k < lower.size(); k++)
+	{
+		Mesh::Face face;
+
+		face.vertex_id_list.push_back(1);
+		face.vertex_id_list.push_back(lower_id[k]);
+		face.vertex_id_list.push_back(lower_id[(k + 1) % lower.size()]);
+
+		Point b = lower[(k + 1) % lower.size()];
+		Point c = lower[k];
+
+		auto n = cross_product(get_diff(b, south_pole), get_diff(c, south_pole));
+
+		face.normal_id_list.push_back(mesh.normal_list.size());
+		mesh.normal_list.push_back(n);
+
+		mesh.face_list.push_back(face);
+	}
+
+	return mesh;
+}
